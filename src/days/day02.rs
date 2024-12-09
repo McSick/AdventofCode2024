@@ -23,7 +23,6 @@ fn parse_input(input: &str) -> Vec<Line> {
     input.lines().map(|line| Line::new(line)).collect()
 }
 
-
 #[derive(Debug)]
 struct Line {
     levels: Vec<i64>,
@@ -32,8 +31,15 @@ struct Line {
 }
 impl Line {
     fn new(line: &str) -> Self {
-        let levels: Vec<i64> = line.split_whitespace().map(|x| x.parse().unwrap()).collect();
-        Self { levels: levels.clone(), is_safe: is_safe(&levels.clone()), is_safe_with_single_removal: is_safe_with_single_removal(&mut levels.clone()) }
+        let levels: Vec<i64> = line
+            .split_whitespace()
+            .map(|x| x.parse().unwrap())
+            .collect();
+        Self {
+            levels: levels.clone(),
+            is_safe: is_safe(&levels.clone()),
+            is_safe_with_single_removal: is_safe_with_single_removal(&mut levels.clone()),
+        }
     }
 }
 
@@ -51,7 +57,7 @@ fn is_safe(levels: &Vec<i64>) -> bool {
         let next_direction = get_direction(levels[i - 1], levels[i]);
         match (current_direction, next_direction) {
             (_, Direction::Invalid) => return false,
-            (None, _direction) => {},
+            (None, _direction) => {}
             (Some(current), next) => {
                 if current != next {
                     return false;

@@ -1,6 +1,6 @@
 use crate::{Solution, SolutionPair};
-use std::fs::read_to_string;
 use std::collections::HashMap;
+use std::fs::read_to_string;
 ///////////////////////////////////////////////////////////////////////////////
 
 pub fn solve() -> SolutionPair {
@@ -16,14 +16,13 @@ fn sum_diff(list1: &mut Vec<i64>, list2: &mut Vec<i64>) -> i64 {
     list1.sort();
     list2.sort();
     let mut sol: i64 = 0;
-    for (a,b) in list1.iter().zip(list2.iter()) {
+    for (a, b) in list1.iter().zip(list2.iter()) {
         sol += (a - b).abs();
     }
     sol
 }
 
 fn simularity_score(list1: &mut Vec<i64>, list2: &mut Vec<i64>) -> i64 {
-
     let mut list2_map_count = HashMap::new();
     for &mut b in list2 {
         *list2_map_count.entry(b).or_insert(0) += 1;
@@ -36,7 +35,6 @@ fn simularity_score(list1: &mut Vec<i64>, list2: &mut Vec<i64>) -> i64 {
     }
     sol
 }
-
 
 pub fn parse_input(input: &str) -> (Vec<i64>, Vec<i64>) {
     let mut list1: Vec<i64> = Vec::new();
@@ -62,7 +60,6 @@ mod tests {
         let (list1, list2) = parse_input(&input);
         assert_eq!(list1, vec![3, 4, 2, 1, 3, 3]);
         assert_eq!(list2, vec![4, 3, 5, 3, 9, 3]);
-
     }
 
     #[test]

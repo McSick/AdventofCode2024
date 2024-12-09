@@ -1,8 +1,8 @@
 use crate::{Solution, SolutionPair};
-use std::fs::read_to_string;
+use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::collections::HashSet;
-use std::cmp::Ordering;
+use std::fs::read_to_string;
 ///////////////////////////////////////////////////////////////////////////////
 
 pub fn solve() -> SolutionPair {
@@ -22,10 +22,15 @@ fn read_input(filename: &str) -> (HashMap<u64, HashSet<u64>>, Vec<Vec<u64>>) {
     let (rules_string, updates_string) = input.split_once("\n\n").unwrap();
     for rule in rules_string.lines() {
         let (key, value) = rule.trim().split_once("|").unwrap();
-        let set = map_order.entry(key.parse().unwrap()).or_insert(HashSet::new());
+        let set = map_order
+            .entry(key.parse().unwrap())
+            .or_insert(HashSet::new());
         set.insert(value.parse().unwrap());
     }
-    updates = updates_string.lines().map(|line| line.split(',').map(|s| s.parse().unwrap()).collect()).collect();
+    updates = updates_string
+        .lines()
+        .map(|line| line.split(',').map(|s| s.parse().unwrap()).collect())
+        .collect();
 
     (map_order, updates)
 }
@@ -36,7 +41,7 @@ fn sum_middles(map_order: &HashMap<u64, HashSet<u64>>, updates: &Vec<Vec<u64>>) 
         let mut sorted_update = update.clone();
         sorted_update.sort_by(|a, b| {
             if let Some(set) = map_order.get(a) {
-                if set.contains(b) { 
+                if set.contains(b) {
                     return Ordering::Less;
                 }
             }
@@ -44,7 +49,7 @@ fn sum_middles(map_order: &HashMap<u64, HashSet<u64>>, updates: &Vec<Vec<u64>>) 
         });
         if *update == sorted_update {
             valid_middles += update[update.len() / 2];
-        } else  {
+        } else {
             invalid_middles += sorted_update[sorted_update.len() / 2];
         }
     }

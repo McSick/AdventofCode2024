@@ -58,7 +58,11 @@ fn operate_part2(answer: u64, left: u64, mut numbers: Vec<u64>) -> Option<u64> {
         let next_number = numbers.remove(0);
         let final_add = operate_part2(answer, left + next_number, numbers.clone());
         let final_mult = operate_part2(answer, left * next_number, numbers.clone());
-        let final_concat = operate_part2(answer, format!("{}{}", left, next_number).parse::<u64>().unwrap(), numbers.clone());
+        let final_concat = operate_part2(
+            answer,
+            format!("{}{}", left, next_number).parse::<u64>().unwrap(),
+            numbers.clone(),
+        );
 
         if final_add.is_some() && final_add.unwrap() == answer {
             final_add
@@ -79,7 +83,10 @@ fn read_input(filename: &str) -> Vec<(u64, Vec<u64>)> {
 fn parse_line(line: &str) -> (u64, Vec<u64>) {
     let parts = line.split(": ").collect::<Vec<&str>>();
     let answer = parts[0].parse::<u64>().unwrap();
-    let numbers: Vec<u64> = parts[1].split(" ").map(|s| s.parse::<u64>().unwrap()).collect();
+    let numbers: Vec<u64> = parts[1]
+        .split(" ")
+        .map(|s| s.parse::<u64>().unwrap())
+        .collect();
     (answer, numbers)
 }
 
@@ -106,7 +113,7 @@ mod tests {
         let result = operate(190, 10, vec![19]);
         assert_eq!(result, Some(190));
 
-        let result = operate(3267, 81, vec![40,27]);
+        let result = operate(3267, 81, vec![40, 27]);
         assert_eq!(result, Some(3267))
     }
 
