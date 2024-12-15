@@ -101,26 +101,6 @@ fn find_tree_step(robots: &mut Vec<Robot>) -> i64 {
     max_step
 }
 
-fn simulate_single_step_stop_input(robots: &mut Vec<Robot>) -> i64 {
-    // get input from user
-    let input = get_input();
-    let mut steps = 0;
-    loop {
-        //print_robots(&robots);
-        let input = get_input();
-        if input == "y" {
-            return steps;
-        } else if input == "n" {
-            for robot in robots.iter_mut() {
-                robot.take_step();
-            }
-            steps += 1;
-        } else {
-            println!("Invalid input");
-        }
-    }
-}
-
 fn print_robots(robots: &Vec<Robot>) {
     println!("");
     for y in 0..MAX_Y {
